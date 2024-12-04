@@ -21,7 +21,7 @@
 if [ "$(git rev-parse --is-inside-work-tree)" = true ]
 then
     # silently stop the existing service, if it exists
-    chmod +x stop_service.sh && ./stop_service.sh > /dev/null 2>&1
+    chmod +x stop_service.sh && ./stop_service.sh
     poetry install
     poetry run python run_service.py
 else
