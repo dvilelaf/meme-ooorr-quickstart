@@ -748,10 +748,10 @@ def main() -> None:
 
         if chain_config.chain_data.user_params.use_staking and not service_exists:
             olas_address = OLAS[chain_type]
-            print(f"[{chain_name}] Please make sure address {address} has at least {wei_to_token(COST_OF_STAKING + COST_OF_BOND_STAKING, olas_address)}")
+            print(f"[{chain_name}] Please make sure address {address} has at least {wei_to_token(COST_OF_STAKING + COST_OF_BOND_STAKING, 'OLAS')}")
 
             spinner = Halo(
-                text=f"[{chain_name}] Waiting for {olas_address}...",
+                text=f"[{chain_name}] Waiting for OLAS token...",
                 spinner="dots",
             )
             spinner.start()
@@ -760,7 +760,7 @@ def main() -> None:
                 time.sleep(1)
 
             balance = get_erc20_balance(ledger_api, olas_address, address) / 10 ** 18
-            spinner.succeed(f"[{chain_name}] Safe updated balance: {balance} {olas_address}")
+            spinner.succeed(f"[{chain_name}] Safe updated balance: {balance} OLAS")
 
         manager.deploy_service_onchain_from_safe_single_chain(
             hash=service.hash,

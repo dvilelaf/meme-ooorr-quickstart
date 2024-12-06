@@ -82,6 +82,14 @@ The agent will need your answer on staking. If you plan to run it as a non staki
 Do you want to stake your service? (y/n):
 ```
 
+You will require OLAS Token for staking. You can find the token address for the respective chains below
+
+1. [GNOSIS](https://gnosisscan.io/address/0xcE11e14225575945b8E6Dc0D4F2dD4C570f79d9f)
+2. [OPTIMISM](https://optimistic.etherscan.io/address/0xFC2E6e6BCbd49ccf3A5f029c79984372DcBFE527)
+3. [BASE](https://basescan.org/address/0x54330d28ca3357F294334BDC454a032e7f353416)
+4. [ETHEREUM](https://etherscan.io/address/0x0001A500A6B18995B03f44bb040A5fFc28E45CB0)
+5. [CELO](https://celoscan.io/address/0xaCFfAe8e57Ec6E394Eb1b41939A8CF7892DbDc51)
+
 ### Notes:
 
 - Staking is currently in a testing phase, so the number of trader agents that can be staked might be limited.
