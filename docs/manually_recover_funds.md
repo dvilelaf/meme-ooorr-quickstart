@@ -73,7 +73,7 @@ For each of these addresses, follow these steps in Metamask:
 <img src="images/metamask3.png" alt="Metamask 3" width="50%">
 <img src="images/metamask4.png" alt="Metamask 4" width="50%">
 
-## Step 2: Drain your service Safe and Agent(s) EOA
+## Step 3: Drain your service Safe and Agent(s) EOA
 
 1. On a web browser, open the Safe webapp interface https://app.safe.global/home?safe=CHAIN:SERVICE_SAFE for your Service Safe, and connect using your Agent(s) EOA through Metamask.
 2. Transfer all your assets from the Service Safe to an address you own using the "Send" button.
@@ -81,6 +81,6 @@ For each of these addresses, follow these steps in Metamask:
 
 **Warning:** Do not drain the Agent(s) EOA before draining the Service Safe!
 
-## Step 3: Drain your Master Safe and Master Wallet EOA.
+## Step 4: Drain your Master Safe and Master Wallet EOA.
 
-Similarly as you did in [Step 2](#drain-your-service-safe-and-agents-eoa), you must drain your Master Safe and then your Master Wallet EOA.
+Similarly as you did in [Step 3](#drain-your-service-safe-and-agents-eoa), you must drain your Master Safe and then your Master Wallet EOA.
