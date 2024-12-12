@@ -32,12 +32,29 @@ Services
         Olas Registry BASE: https://registry.olas.network/base/services/<ID>     
 ```
 
+Answer `yes` When prompted:
+
+```text
+Do you want to terminate ALL the services? (yes/no): y
+```
+
 **Notes:**
 
 - The actual output of the script will deppend on the number of services you have and the chains these services are in.
 - The displayed URLs will be useful to follow the steps below.
+- If your service is registered in multiple chains, the script will terminate and unbond in all the chains.
+- Staking contracts have a minimum staking time. You cannot terminate your service until the minimum staking time has passed since you last staked your service (typically 72 hours).
 
-## Step 1: Import EOA wallets to Metamask
+## Step 1: Ensure your services are terminated and unbonded
+
+1. On a web browser, open the Olas Registry Webapp page of your service: https://registry.olas.network/CHAIN/services/SERVICE_ID.
+2. If your service is terminated and unbonded, you should see that its state is "Pre-Registration".
+
+You need to check for all the chains your service is in.
+
+**Only proceed with the steps below if your service is terminated and unbonded. A service which is staked for less than the minimum staking time cannot be unbonded yet.**
+
+## Step 2: Import EOA wallets to Metamask
 
 Import the addresses corresponding to
 
@@ -60,23 +77,10 @@ For each of these addresses, follow these steps in Metamask:
 
 1. On a web browser, open the Safe webapp interface https://app.safe.global/home?safe=CHAIN:SERVICE_SAFE for your Service Safe, and connect using your Agent(s) EOA through Metamask.
 2. Transfer all your assets from the Service Safe to an address you own using the "Send" button.
-3. (Optional) Transfer the ownership of the Safe to the Master Safe. This is a step required if you want to reuse this service in the future.
-4. Once the Safe is drained, you can transfer your Agent(s) EOA assets through Metamask to an addres you own.
+3. Once the Safe is drained, you can transfer your Agent(s) EOA assets through Metamask to an addres you own.
 
 **Warning:** Do not drain the Agent(s) EOA before draining the Service Safe!
 
-## Step 3: Terminate and unbond your services
-
-1. On a web browser, open the Safe webapp interface https://app.safe.global/home?safe=CHAIN:MASTER_SAFE for your Master Safe, and connect using your Master Wallet EOA through Metamask.
-2. On another web browser, open the Olas Registry Webapp page of your service: https://registry.olas.network/CHAIN/services/SERVICE_ID.
-3. If your service is on a state other than "Pre-Registration" you must terminate the service and/or unbond your agents.
-4. To ternimate and unbond, you must connect the Master Safe via Wallet Connect using the "Connect Wallet" button on the top right corner and send the transactions accordingly.
-5. Once your service is terminated and unbonded, you should see that its state is "Pre-Registration".
-
-**Notes:**
-- If your service is registered in multiple chains, you have to terminate and unbond in all the chains.
-- Staking contracts have a minimum staking time. You cannot terminate your service until the minimum staking time has passed since you last staked your service (typically 72 hours).
-
-## Step 4: Drain your Master Safe and Master Wallet EOA.
+## Step 3: Drain your Master Safe and Master Wallet EOA.
 
 Similarly as you did in [Step 2](#drain-your-service-safe-and-agents-eoa), you must drain your Master Safe and then your Master Wallet EOA.

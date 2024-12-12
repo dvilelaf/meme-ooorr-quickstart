@@ -113,6 +113,20 @@ def main() -> None:
             print("")
         print("")
 
+    print("")
+    response = input("Do you want to terminate ALL the services? (yes/no): ").strip().lower()
+    print("")
+    if response not in ("yes", "y"):
+        print("Exiting the script.")
+        return
+
+    for service in manager.json:
+        for chain_id, chain_config in service['chain_configs'].items():
+            chain_name = ChainType.from_id(int(chain_id)).name
+            print(f"Terminating {service['name']} on {chain_name}...")
+            manager._terminate_service_on_chain_from_safe(hash=service['hash'], chain_id=chain_id)
+            print(f"Terminating {service['name']} on {chain_name} done.")
+
 
 if __name__ == "__main__":
     main()
