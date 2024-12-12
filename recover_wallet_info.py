@@ -36,13 +36,17 @@ def main() -> None:
     """Main method."""
 
     print("")
-    warning_message = (
-        "WARNING: This script will display sensitive wallet information on screen, "
+    print("-------")
+    print("WARNING")
+    print("-------")
+    print(
+        "This script will display sensitive wallet information on screen, "
         "including private keys. Ensure you run this script "
-        "in a secure, offline environment and do not share the output with anyone. "
-        "Do you want to continue? (yes/no): "
+        "in a secure, offline environment and do not share the output with anyone."
     )
-    response = input(warning_message).strip().lower()
+    print("")
+    response = input("Do you want to continue? (yes/no): ").strip().lower()
+    print("")
     if response not in ("yes", "y"):
         print("Exiting the script. No information has been displayed.")
         return
@@ -58,43 +62,55 @@ def main() -> None:
 
     password = getpass.getpass("Enter local user account password: ")
     if not operate.user_account.is_valid(password=password):
-        print("Invalid password!")
-        return
+        print("")
+        print("WARNING: Invalid password!")
+        input("Press any key to continue...")
+        print("")
 
     operate.password = password
     manager = operate.service_manager()
     wallet = operate.wallet_manager.load(ledger_type=LedgerType.ETHEREUM)
 
     print("")
-    print("---------------------------")
-    print("Wallet recovery information")
-    print("---------------------------")
-    print("")
+    print("------------------------------")
+    print("Master Wallet and Master Safes")
+    print("------------------------------")
     print("Master Wallet (EOA):")
-    print(f"  * Address: {wallet.crypto.address}")
-    print(f"  * Private key: {wallet.crypto.private_key}")
+    print(f"  * Address: {wallet.address}")
+
+    try:
+        print(f"  * Private key: {wallet.crypto.private_key}")
+    except Exception:
+        print("  * Private key cannot be recovered. Please import the wallet using the seed phrase.")
+    
     print("")
-    print("Master Safes:")
+    print("Master Safe(s):")
     for operate_chain_id, safe_address in wallet.safes.items():
-        print(f"  * {ChainType(operate_chain_id).name} address: {safe_address}")
+        chain_name = ChainType(operate_chain_id).name
+        safe_app_chain_id = "gno" if chain_name == "GNOSIS" else chain_name.lower()
+        print(f"  * Safe {chain_name}: https://app.safe.global/home?safe={safe_app_chain_id}:{safe_address}")
     print("")
 
+    print("--------")
     print("Services")
     print("--------")
 
     for service in manager.json:
         print(f"  * Service {service['name']}:")
 
-        print("    - Service Agents:")
-        for key in service['keys']:
-            print(f"      - Agent address (EOA): {key['address']}")
-            print(f"        Agent private key: {key['private_key']}")
+        print("    - Service Agent(s):")
+        for i, key in enumerate(service['keys'], start=1):
+            print(f"      - Agent {i} address (EOA): {key['address']}")
+            print(f"        Agent {i} private key: {key['private_key']}")
 
         print("")
-        print("    - Service Safes:")
+        print("    - Service Safe(s):")
         for chain_id, chain_config in service['chain_configs'].items():
-            print(f"      - {ChainType.from_id(int(chain_id)).name} address: {chain_config['chain_data']['multisig']}")
-
+            chain_name = ChainType.from_id(int(chain_id)).name
+            safe_app_chain_id = "gno" if chain_name == "GNOSIS" else chain_name.lower()
+            print(f"      - Safe {chain_name}: https://app.safe.global/home?safe={safe_app_chain_id}:{chain_config['chain_data']['multisig']}")
+            print(f"        Olas Registry {chain_name}: https://registry.olas.network/{chain_name.lower()}/services/{chain_config['chain_data']['token']}")
+            print("")
         print("")
 
 
