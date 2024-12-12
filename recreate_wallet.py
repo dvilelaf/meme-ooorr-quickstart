@@ -53,7 +53,7 @@ if __name__ == "__main__":
     print("")
     print(f"Please, backup './memeooorr/wallets/ethereum.txt' and replace it by '{file_name}'.")
     print("")
-    print(f"Ensure you have not modified your './memeooorr/wallets/ethereum.json' file. It should look like this:")
+    print("Ensure you have not modified your './memeooorr/wallets/ethereum.json' file. It should look like this:")
 
     data = {
         "address": account.address,
