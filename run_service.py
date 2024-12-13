@@ -54,7 +54,7 @@ from operate.types import (
 )
 from scripts.twitter_verify import get_twitter_cookies, validate_twitter_credentials
 from scripts.github import get_latest_tag
-
+from recover_wallet_info import _fix_services
 
 load_dotenv()
 
@@ -527,6 +527,7 @@ def fetch_token_price(url: str, headers: dict) -> t.Optional[float]:
 def main() -> None:
     """Run service."""
 
+    _fix_services()
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--terminate',
