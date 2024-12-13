@@ -20,6 +20,8 @@
 
 import getpass
 from pathlib import Path
+import json
+import os
 
 from operate.cli import OperateApp
 from operate.types import (
@@ -32,9 +34,38 @@ REPO_ROOT = Path(__file__).resolve().parent
 OPERATE_HOME = REPO_ROOT / ".memeooorr"
 
 
+def _fix_services() -> None:
+    print("Fixing services...")
+    for folder_name in os.listdir(OPERATE_HOME / "services"):
+        folder_path = OPERATE_HOME / "services" / folder_name
+        if os.path.isdir(folder_path):
+            config_path = os.path.join(folder_path, "config.json")
+
+            if os.path.exists(config_path):
+                try:
+                    with open(config_path, "r", encoding="utf-8") as file:
+                        config_data = json.load(file)
+
+                    config_data["description"] = config_data.get("description", "Default_description")
+                    config_data["service_path"] = config_data.get(
+                        "service_path",
+                        str((OPERATE_HOME / "services" / config_data["hash"] / "memeooorr").absolute()))
+                    for key in config_data["keys"]:
+                        if "private_key" not in key:
+                            key_path = OPERATE_HOME / "keys" / key["address"]
+                            key["private_key"] = json.loads(key_path.read_text()).get("private_key")
+
+                    with open(config_path, "w", encoding="utf-8") as file:
+                        json.dump(config_data, file, indent=4)
+
+                except (json.JSONDecodeError, IOError) as e:
+                    print(f"Error processing {config_path}: {e}")
+
+
 def main() -> None:
     """Main method."""
 
+    _fix_services()
     print("")
     print("-------")
     print("WARNING")
