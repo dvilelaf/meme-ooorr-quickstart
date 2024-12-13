@@ -39,7 +39,7 @@ def _fix_services() -> None:
     for folder_name in os.listdir(OPERATE_HOME / "services"):
         folder_path = OPERATE_HOME / "services" / folder_name
         if os.path.isdir(folder_path):
-            config_path = os.path.join(folder_path, "config.json")
+            config_path = folder_path / "config.json"
 
             if os.path.exists(config_path):
                 try:
@@ -60,6 +60,11 @@ def _fix_services() -> None:
 
                 except (json.JSONDecodeError, IOError) as e:
                     print(f"Error processing {config_path}: {e}")
+
+            keys_path = folder_path / "keys.json"
+            if not keys_path.exists():
+                with keys_path.open("w") as f:
+                    json.dump(config_data["keys"], f, indent=4)
 
 
 def main() -> None:
