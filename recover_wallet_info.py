@@ -47,6 +47,13 @@ def _fix_services() -> None:
                         config_data = json.load(file)
 
                     config_data["description"] = config_data.get("description", "Default_description")
+                    config_data["service_path"] = config_data.get(
+                        "service_path",
+                        str((OPERATE_HOME / "services" / config_data["hash"] / "memeooorr").absolute()))
+                    for key in config_data["keys"]:
+                        if "private_key" not in key:
+                            key_path = OPERATE_HOME / "keys" / key["address"]
+                            key["private_key"] = json.loads(key_path.read_text()).get("private_key")
 
                     with open(config_path, "w", encoding="utf-8") as file:
                         json.dump(config_data, file, indent=4)
