@@ -4,6 +4,7 @@
 
 # 🚨 **WARNING: repository deprecated** 🚨
 > This repository has been deprecated and will not be supported until further notice
+> Please use [the new Quickstart](https://github.com/valory-xyz/quickstart/)
 
 The Memeooorr agent currently operates on the following chains:
 - Base
